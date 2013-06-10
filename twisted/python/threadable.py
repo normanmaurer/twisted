@@ -104,7 +104,10 @@ _dummyID = object()
 def getThreadID():
     if threadingmodule is None:
         return _dummyID
-    return threadingmodule.currentThread().ident
+    try:
+    	return threadingmodule.currentThread().ident
+    except AttributeError:
+	return _dummyID
 
 
 

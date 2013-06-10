@@ -49,6 +49,16 @@ class Platform:
     Gives us information about the platform we're running on.
     """
 
+    # See http://twistedmatrix.com/trac/ticket/3413
+    # By oberstet
+    if os.name == 'java' and hasattr(os, '_name'):
+        ## see:
+        ## http://bugs.jython.org/issue1521
+        ## http://bugs.jython.org/msg7927
+        osName = os._name
+    else:
+        osName = os.name
+
     type = knownPlatforms.get(os.name)
     seconds = staticmethod(_timeFunctions.get(type, time.time))
     _platform = sys.platform

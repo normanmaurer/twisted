@@ -22,6 +22,19 @@ from __future__ import division
 
 import sys, string, socket, struct
 
+# workaround for Jython, see: http://bugs.jython.org/issue1521
+# See http://twistedmatrix.com/trac/ticket/3413
+# By oberstet
+import __builtin__
+if not hasattr(__builtin__, 'buffer'):
+    def _buffer(object, offset = None, size = None):
+       if offset is None:
+          offset = 0
+       if size is None:
+          size = len(object)
+       return object[offset:offset+size]
+    __builtin__.buffer = _buffer
+
 
 if sys.version_info < (3, 0):
     _PY3 = False
